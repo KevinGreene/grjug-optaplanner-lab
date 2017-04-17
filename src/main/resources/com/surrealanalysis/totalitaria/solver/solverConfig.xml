@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+    <!--<environmentMode>FULL_ASSERT</environmentMode>-->
+    <!--<environmentMode>FAST_ASSERT</environmentMode>-->
+    <solutionClass>com.surrealanalysis.totalitaria.domain.Schedule</solutionClass>
+    <entityClass>com.surrealanalysis.totalitaria.domain.EmployeeShiftTaskAssignment</entityClass>
+
+    <scoreDirectorFactory>
+        <scoreDrl>com/surrealanalysis/totalitaria/solver/scoreRules.drl</scoreDrl>
+    </scoreDirectorFactory>
+
+    <termination>
+        <minutesSpentLimit>2</minutesSpentLimit>
+        <bestScoreLimit>0hard/0soft</bestScoreLimit>
+    </termination>
+    <constructionHeuristic/>
+    <localSearch>
+        <acceptor>
+            <simulatedAnnealingStartingTemperature>2hard/100soft</simulatedAnnealingStartingTemperature>
+        </acceptor>
+        <forager>
+            <acceptedCountLimit>4</acceptedCountLimit>
+        </forager>
+    </localSearch>
+</solver>
