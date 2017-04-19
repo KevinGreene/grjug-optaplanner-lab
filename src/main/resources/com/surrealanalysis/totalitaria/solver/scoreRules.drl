@@ -5,6 +5,7 @@ import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScoreHolder;
 import com.surrealanalysis.totalitaria.solver.*
 import com.surrealanalysis.totalitaria.domain.*
 import java.util.List
+import java.util.Set
 
 global HardSoftScoreHolder scoreHolder;
 
@@ -15,15 +16,15 @@ rule "Project tasks should be fully allocated"
                 $assignment:EmployeeShiftTaskAssignment($task == task),
                 count($assignment))
     then
-        scoreHolder.addHardConstraintMatch(kcontext, $hours.intValue() - $grains);
+    scoreHolder.addHardConstraintMatch(kcontext, $hours.intValue() - $grains);
 end
 
 rule "Project tasks should not be over allocated"
     when
     $task: ProjectTask($grains: grains)
-    $hours: Number(intValue > $grains) from accumulate(
+    $grainCount: Number(intValue > $grains) from accumulate(
                 $assignment:EmployeeShiftTaskAssignment($task == task),
                 count($assignment))
     then
-        scoreHolder.addHardConstraintMatch(kcontext, $grains - $hours.intValue());
+    scoreHolder.addHardConstraintMatch(kcontext, $grains - $grainCount.intValue());
 end

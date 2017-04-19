@@ -1,5 +1,7 @@
 package com.surrealanalysis.totalitaria.domain
 
+import com.google.common.math.IntMath
+
 abstract class ProblemFact {
     abstract val id: Int
     override fun equals(other: Any?): Boolean {
@@ -18,11 +20,10 @@ data class Project(override val id: Int,
 data class ProjectTask(override val id: Int,
                        val project: Project,
                        val grains: Int,
-                       val requiredSkills: Set<Skill>) : ProblemFact()
+                       val name: String) : ProblemFact()
 
 data class Employee(override val id: Int,
-                    val name: String,
-                    val skills: Set<Skill>) : ProblemFact()
+                    val name: String) : ProblemFact()
 
 data class Skill(override val id: Int,
                  val name: String) : ProblemFact()

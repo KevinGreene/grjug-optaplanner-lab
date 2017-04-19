@@ -17,6 +17,7 @@ data class ScheduleGenerator(val employeeCount: Int,
     val random: Random = Random()
 
     fun getName() = "${faker.name().firstName()} ${faker.name().lastName()}"
+    fun getTaskName() = "${faker.superhero().name()} ${faker.superhero().power()}"
     fun getCompanyName() = faker.company().name()!!
     fun getSkillName() = faker.resolve("job.key_skills")!!
 
@@ -30,7 +31,7 @@ data class ScheduleGenerator(val employeeCount: Int,
         val skills: List<Skill> = (1..skillCount).map { Skill(it, getSkillName()) }.distinct()
 
         val employees: List<Employee> = (1..employeeCount).map {
-            Employee(it, getName(), getRandomSubset(skills, 3).toSet())
+            Employee(it, getName())
         }
 
         val projects: List<Project> = (1..projectCount).map {
@@ -40,7 +41,11 @@ data class ScheduleGenerator(val employeeCount: Int,
         val projectTasks: List<ProjectTask> = projects.mapIndexed { index, project ->
             (1..tasksPerProject).map {
                 val id = it + index * tasksPerProject
-                ProjectTask(id, project, random.nextInt(8) + 2, LinkedHashSet(getRandomSubset(skills, 2)))
+                ProjectTask(
+                        id = id,
+                        project = project,
+                        grains = random.nextInt(8) + 2,
+                        name = getTaskName())
             }
         }.flatten()
 

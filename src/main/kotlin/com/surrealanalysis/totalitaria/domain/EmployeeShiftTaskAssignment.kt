@@ -22,6 +22,13 @@ class EmployeeShiftTaskAssignment {
         this.timeGrain = timeGrain
     }
 
+    constructor(id: Int, employee: Employee, timeGrain: TimeGrain, task: ProjectTask) : this() {
+        this.id = id
+        this.employee = employee
+        this.timeGrain = timeGrain
+        this.task = task
+    }
+
     override fun equals(other: Any?): Boolean {
         return other != null
                 && other is EmployeeShiftTaskAssignment
